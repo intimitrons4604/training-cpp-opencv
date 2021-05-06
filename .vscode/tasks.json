@@ -1,0 +1,55 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "Build (Release)",
+			"detail": "Build an optimized executable",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"command": "/usr/bin/g++",
+			"args": [
+				"--std=c++17",
+				"-O3",
+				"-Wall",
+				"-Werror",
+                "src/*.cpp",
+				"-o",
+				"${workspaceFolder}/main",
+				"`pkg-config", "--libs", "--cflags", "opencv4`",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+		},
+		{
+			"type": "cppbuild",
+			"label": "Build (Debug)",
+			"detail": "Build an unoptimized executable with debug information",
+			"group": "build",
+			"command": "/usr/bin/g++",
+			"args": [
+				"--std=c++17",
+				"-g",
+				"-Og",
+				"-Wall",
+				"-Werror",
+                "src/*.cpp",
+				"-o",
+				"${workspaceFolder}/main",
+				"`pkg-config", "--libs", "--cflags", "opencv4`",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+		}
+	]
+}
