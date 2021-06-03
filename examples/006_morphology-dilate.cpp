@@ -20,7 +20,7 @@ int main()
   cv::createTrackbar("X Size", dilatedWindowName, &xSize, 100);
   cv::createTrackbar("Y Size", dilatedWindowName, &ySize, 100);
 
-  while (cv::waitKey(500) == -1)
+  do
   {
     cv::Mat dilatedImage = grayscaleImage.clone();
 
@@ -30,5 +30,5 @@ int main()
     }
 
     cv::imshow(dilatedWindowName, dilatedImage);
-  }
+  } while (cv::waitKey(500) == -1);
 }

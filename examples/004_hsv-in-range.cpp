@@ -27,7 +27,7 @@ int main()
   cv::createTrackbar("V Lower", inRangeWindowName, &valueLowerBound, valueMaximum);
   cv::createTrackbar("V Upper", inRangeWindowName, &valueUpperBound, valueMaximum);
 
-  while (cv::waitKey(500) == -1)
+  do
   {
     const cv::Scalar lowerBound{(double) hueLowerBound, (double) saturationLowerBound, (double) valueLowerBound};
     const cv::Scalar upperBound{(double) hueUpperBound, (double) saturationUpperBound, (double) valueUpperBound};
@@ -40,5 +40,5 @@ int main()
     cv::bitwise_and(colourImage, mask, maskedImage);
 
     cv::imshow(inRangeWindowName, maskedImage);
-  }
+  } while (cv::waitKey(500) == -1);
 }
