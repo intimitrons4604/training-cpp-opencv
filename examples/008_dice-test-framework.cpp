@@ -3,6 +3,8 @@
 
 #include "TestFramework/DiceTestCaseRunner.h"
 
+// Run your program with a test case file argument, for example:
+// ./main ./resources/003/TestCases.txt
 int main(const int argc, const char** argv)
 {
   if (argc != 2)
@@ -18,6 +20,11 @@ int main(const int argc, const char** argv)
   {
     const auto imagePath = runner.nextImage();
 
-    // Run your algorithm on the image and check if it got the correct answer
+    // Run your algorithm on the image and submit an answer
+    // The result will be printed and you may use the result returned by submitAnswer() if desired
+
+    runner.submitAnswer({});
   }
+
+  runner.printStatistics();
 }
