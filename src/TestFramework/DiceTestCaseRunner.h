@@ -16,9 +16,21 @@ public:
   std::filesystem::path nextImage();
   DiceTestCaseResult submitAnswer(const std::vector<int>& answer);
 
+  void printStatistics();
+
 private:
   std::vector<int> parseData(const std::string& data);
+  void printResult(const DiceTestCaseResult& result);
+  void accumulateStatistics(const DiceTestCaseResult& result);
 
   TestCaseFileReader reader;
   std::optional<TestCase> currentTestCase = std::nullopt;
+  std::optional<DiceTestCaseResult> currentResult = std::nullopt;
+
+  int numberCorrect = 0;
+  int numberIncorrect = 0;
+
+  double minPercentAccuracy = 1;
+  double maxPercentAccuracy = 0;
+  double percentAccuracyAccumulator = 0;
 };
