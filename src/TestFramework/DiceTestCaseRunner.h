@@ -1,16 +1,24 @@
 #pragma once
 
 #include <filesystem>
+#include <optional>
 #include <vector>
 
-#include "TestCaseRunner.h"
+#include "DiceTestCaseResult.h"
+#include "TestCaseFileReader.h"
 
-class DiceTestCaseRunner : public TestCaseRunner<std::vector<int>>
+class DiceTestCaseRunner
 {
 public:
   DiceTestCaseRunner(const std::filesystem::path& testCaseFile);
 
-protected:
-  std::vector<int> parseData(const std::string& data) override;
-  bool checkAnswer(const std::vector<int>& expected, const std::vector<int>& actual) override;
+  bool hasNextImage();
+  std::filesystem::path nextImage();
+  DiceTestCaseResult submitAnswer(const std::vector<int>& answer);
+
+private:
+  std::vector<int> parseData(const std::string& data);
+
+  TestCaseFileReader reader;
+  std::optional<TestCase> currentTestCase = std::nullopt;
 };

@@ -1,11 +1,30 @@
 #include "DiceTestCaseRunner.h"
 
-#include <algorithm>
 #include <sstream>
 
-DiceTestCaseRunner::DiceTestCaseRunner(const std::filesystem::path& testCaseFile) : TestCaseRunner{testCaseFile}
+DiceTestCaseRunner::DiceTestCaseRunner(const std::filesystem::path& testCaseFile) : reader{testCaseFile}
 {
   // Intentionally empty
+}
+
+bool DiceTestCaseRunner::hasNextImage()
+{
+  return reader.hasNext();
+}
+
+std::filesystem::path DiceTestCaseRunner::nextImage()
+{
+  currentTestCase = reader.next();
+
+  return currentTestCase.value().imagePath;
+}
+
+DiceTestCaseResult DiceTestCaseRunner::submitAnswer(const std::vector<int>& answer)
+{
+  const auto testCase = currentTestCase.value();
+  const auto expected = parseData(testCase.data);
+
+  return {testCase.imagePath, expected, answer};
 }
 
 std::vector<int> DiceTestCaseRunner::parseData(const std::string& data)
@@ -24,20 +43,5 @@ std::vector<int> DiceTestCaseRunner::parseData(const std::string& data)
     }
   }
 
-  std::sort(values.begin(), values.end());
-
   return values;
-}
-
-bool DiceTestCaseRunner::checkAnswer(const std::vector<int>& expected, const std::vector<int>& actual)
-{
-  if (expected.size() != actual.size())
-  {
-    return false;
-  }
-
-  auto actualSorted = actual;
-  std::sort(actualSorted.begin(), actualSorted.end());
-
-  return expected == actualSorted;
 }
